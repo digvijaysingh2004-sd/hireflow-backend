@@ -80,16 +80,6 @@ dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launc
 Start-Process dotnet -ArgumentList "run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http"
 ```
 
-#### PowerShell Script:
-```powershell
-powershell -ExecutionPolicy Bypass -File .\run-all-services.ps1
-```
-
-#### Windows Batch (CMD / Double-Click):
-```cmd
-.\run-all.bat
-```
-
 ---
 
 ## 🌐 Swagger UI Documentation Links
