@@ -1,24 +1,29 @@
-# ASP.NET Core & .NET build artifacts
-bin/
-obj/
+## Build and output directories
+[Bb]in/
+[Oo]bj/
+**/[Bb]in/
+**/[Oo]bj/
+
+## Visual Studio & IDEs
+.vs/
+.vscode/
+.idea/
 *.user
 *.userosscache
 *.suo
 *.userprefs
 *.dbmdl
-.vs/
-.idea/
-.vscode/
 
-# Secrets & Environment variables
+## Secrets & Local configs
 *.env
 !.env.example
+*.local.json
 appsettings.Development.local.json
 
-# Docker
+## Docker
 hireflow-postgres-data/
 
-# OS files
+## OS Files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
