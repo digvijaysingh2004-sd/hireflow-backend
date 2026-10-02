@@ -34,45 +34,73 @@ HireFlow follows a clean **database-per-service** microservice architecture:
 - PostgreSQL 17+ (installed locally or via Docker)
 - Docker Desktop (optional for containerized environment)
 
+---
+
 ### 1. Database Configuration
 You can run PostgreSQL either through Docker or locally:
 
 #### Option A: Local PostgreSQL (Recommended if already installed)
 1. Ensure your local PostgreSQL service is running on port `5432`.
-2. Configure credentials in `appsettings.Development.json` or `.env`:
-   ```json
-   "ConnectionStrings": {
-     "IdentityDatabase": "Host=localhost;Port=5432;Database=hireflow_identity;Username=postgres;Password=your_password"
-   }
-   ```
-3. Create the microservice databases (`hireflow_identity`, `hireflow_hiring`, `hireflow_notification`).
+2. Credentials & Connection Strings:
+   - **Identity DB**: `hireflow_identity`
+   - **Hiring DB**: `hireflow_hiring`
+   - **Notification DB**: `hireflow_notification`
 
 #### Option B: Docker Compose
 Start PostgreSQL and Mailpit with:
 ```bash
 docker compose up -d postgres mailpit
 ```
-> Note: Docker PostgreSQL is mapped to host port `5433` by default to prevent port conflicts with any existing local PostgreSQL installation.
 
 ---
 
-### 2. Apply Database Migrations
+### 2. Run the Microservices
 
-Apply the initial Identity migration:
+#### Run Identity API (Port 5218)
 ```bash
-dotnet ef database update --project src/Services/Identity/HireFlow.Identity.Infrastructure --startup-project src/Services/Identity/HireFlow.Identity.Api
+dotnet run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http
+```
+
+#### Run Hiring API (Port 5104)
+```bash
+dotnet run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http
+```
+
+#### Run Notification API (Port 5289)
+```bash
+dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http
 ```
 
 ---
 
-### 3. Run the Identity Service
+### 3. Run All Microservices at Once
 
-```bash
-dotnet run --project src/Services/Identity/HireFlow.Identity.Api
-```
+- **Windows Batch (CMD or double-click)**:
+  ```cmd
+  .\run-all.bat
+  ```
 
-- **API Base URL**: `http://localhost:5000` / `https://localhost:5001`
-- **Swagger Documentation**: `http://localhost:5000/swagger`
+- **PowerShell**:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File .\run-all-services.ps1
+  ```
+
+- **PowerShell One-Liner**:
+  ```powershell
+  Start-Process dotnet -ArgumentList "run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http"
+  ```
+
+---
+
+## 🌐 Swagger UI Documentation Links
+
+When running locally, Swagger UI is available at:
+
+- **Identity Service Swagger**: `http://localhost:5218/swagger`
+- **Hiring Service Swagger**: `http://localhost:5104/swagger`
+- **Notification Service Swagger**: `http://localhost:5289/swagger`
+
+> Note: All Swagger UIs include a top-right **"Select a definition"** dropdown allowing you to switch between microservice documentation on a single page.
 
 ---
 
@@ -95,6 +123,6 @@ When the Identity Service starts, it automatically seeds default roles and demo 
 # Build complete solution
 dotnet build HireFlow.sln
 
-# Run test suites (when implemented)
+# Run test suites
 dotnet test HireFlow.sln
 ```
