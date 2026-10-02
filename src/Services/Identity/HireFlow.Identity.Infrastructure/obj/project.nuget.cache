@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "m2yI2LiLJnU=",
+  "dgSpecHash": "/2Y6Vr0RDnA=",
   "success": true,
   "projectFilePath": "C:\\digvijayProjects\\hireflow\\src\\Services\\Identity\\HireFlow.Identity.Infrastructure\\HireFlow.Identity.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kisha\\.nuget\\packages\\aspnetcore.healthchecks.redis\\9.0.0\\aspnetcore.healthchecks.redis.9.0.0.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.3.11\\microsoft.aspnetcore.authentication.2.3.11.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.9\\microsoft.aspnetcore.authentication.abstractions.2.3.9.nupkg.sha512",
@@ -54,6 +55,10 @@
     "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.options\\10.0.12\\microsoft.extensions.options.10.0.12.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.12\\microsoft.extensions.primitives.10.0.12.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.webencoders\\8.0.11\\microsoft.extensions.webencoders.8.0.11.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.6.0\\microsoft.identitymodel.abstractions.8.6.0.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.6.0\\microsoft.identitymodel.jsonwebtokens.8.6.0.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.identitymodel.logging\\8.6.0\\microsoft.identitymodel.logging.8.6.0.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.6.0\\microsoft.identitymodel.tokens.8.6.0.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\microsoft.net.http.headers\\2.3.9\\microsoft.net.http.headers.2.3.9.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\microsoft.visualstudio.solutionpersistence\\1.0.52\\microsoft.visualstudio.solutionpersistence.1.0.52.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
@@ -70,6 +75,7 @@
     "C:\\Users\\kisha\\.nuget\\packages\\system.composition.hosting\\9.0.0\\system.composition.hosting.9.0.0.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\system.composition.runtime\\9.0.0\\system.composition.runtime.9.0.0.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.6.0\\system.identitymodel.tokens.jwt.8.6.0.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\system.io.hashing\\10.0.12\\system.io.hashing.10.0.12.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
     "C:\\Users\\kisha\\.nuget\\packages\\system.security.cryptography.xml\\8.0.4\\system.security.cryptography.xml.8.0.4.nupkg.sha512"

@@ -1,6 +1,75 @@
-@HireFlow.Identity.Api_HostAddress = http://localhost:5218
+@HostAddress = http://localhost:5218
 
-GET {{HireFlow.Identity.Api_HostAddress}}/weatherforecast/
+### 1. Health Check
+GET {{HostAddress}}/
 Accept: application/json
 
-###
+### 2. Register Candidate
+POST {{HostAddress}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "email": "candidate@example.com",
+  "password": "StrongPassword-123!",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+### 3. Verify Email (use OTP logged in service console)
+POST {{HostAddress}}/api/v1/auth/verify-email
+Content-Type: application/json
+
+{
+  "email": "candidate@example.com",
+  "otp": "123456"
+}
+
+### 4. Login
+# @name login
+POST {{HostAddress}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "candidate@example.com",
+  "password": "StrongPassword-123!"
+}
+
+### 5. Get Current User (Protected)
+@token = {{login.response.body.accessToken}}
+GET {{HostAddress}}/api/v1/auth/me
+Authorization: Bearer {{token}}
+
+### 6. Refresh Token
+@refreshToken = {{login.response.body.refreshToken}}
+POST {{HostAddress}}/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+### 7. Forgot Password
+POST {{HostAddress}}/api/v1/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "candidate@example.com"
+}
+
+### 8. Reset Password
+POST {{HostAddress}}/api/v1/auth/reset-password
+Content-Type: application/json
+
+{
+  "email": "candidate@example.com",
+  "otp": "123456",
+  "newPassword": "NewStrongPassword-456!"
+}
+
+### 9. Logout
+POST {{HostAddress}}/api/v1/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}

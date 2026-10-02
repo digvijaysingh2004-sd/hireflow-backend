@@ -23,6 +23,10 @@ public static class DependencyInjection
             });
         });
 
+        services.AddSingleton<HireFlow.Identity.Application.Interfaces.IPasswordHasher, Security.PasswordHasher>();
+        services.AddSingleton<HireFlow.Identity.Application.Interfaces.ITokenService, Security.TokenService>();
+        services.AddScoped<HireFlow.Identity.Application.Interfaces.IAuthService, Services.AuthService>();
+
         return services;
     }
 }

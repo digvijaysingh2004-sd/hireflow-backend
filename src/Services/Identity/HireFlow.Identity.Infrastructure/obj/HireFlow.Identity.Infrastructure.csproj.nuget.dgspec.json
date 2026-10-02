@@ -1102,6 +1102,14 @@
             "FluentValidation": {
               "target": "Package",
               "version": "[12.1.1, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.0, )"
             }
           },
           "imports": [
@@ -1810,6 +1818,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[10.0.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.6.0, )"
             }
           },
           "imports": [
