@@ -162,6 +162,66 @@ public class AuthService : IAuthService
         return Result<bool>.Success(true);
     }
 
+    public async Task<Result<bool>> ResendOtpAsync(ResendOtpRequest request, CancellationToken cancellationToken = default)
+    {
+        var normalizedEmail = request.Email.Trim().ToLowerInvariant();
+        var purpose = string.IsNullOrWhiteSpace(request.Purpose) ? "Registration" : request.Purpose.Trim();
+
+        var user = await _dbContext.Users
+            .FirstOrDefaultAsync(u => u.Email == normalizedEmail, cancellationToken);
+
+        // Always return success to prevent email enumeration
+        if (user == null || !user.IsActive)
+        {
+            return Result<bool>.Success(true);
+        }
+
+        if (purpose == "Registration" && user.IsEmailVerified)
+        {
+            return Result<bool>.Success(true);
+        }
+
+        // Invalidate older pending challenges for this purpose
+        var olderChallenges = await _dbContext.OtpChallenges
+            .Where(c => c.UserId == user.Id && c.Purpose == purpose && c.VerifiedAtUtc == null)
+            .ToListAsync(cancellationToken);
+
+        foreach (var c in olderChallenges)
+        {
+            c.VerifiedAtUtc = DateTimeOffset.UtcNow;
+        }
+
+        var otpCode = _tokenService.GenerateOtpCode();
+        var otpHash = _tokenService.HashOtp(otpCode);
+
+        var challenge = new OtpChallenge
+        {
+            UserId = user.Id,
+            Purpose = purpose,
+            CodeHash = otpHash,
+            ExpiresAtUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+            CreatedAtUtc = DateTimeOffset.UtcNow
+        };
+
+        _dbContext.OtpChallenges.Add(challenge);
+
+        _dbContext.AuditLogs.Add(new AuditLog
+        {
+            ActorUserId = user.Id,
+            Action = "OtpResent",
+            EntityType = "User",
+            EntityId = user.Id.ToString(),
+            CreatedAtUtc = DateTimeOffset.UtcNow
+        });
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation(">>> [RESENT OTP] Email: {Email}, Purpose: {Purpose}, OTP Code: {OtpCode} (Expires in 10 minutes) <<<",
+            normalizedEmail, purpose, otpCode);
+
+        return Result<bool>.Success(true);
+    }
+
     public async Task<Result<AuthResponse>> LoginAsync(LoginRequest request, string? ipAddress, CancellationToken cancellationToken = default)
     {
         var normalizedEmail = request.Email.Trim().ToLowerInvariant();

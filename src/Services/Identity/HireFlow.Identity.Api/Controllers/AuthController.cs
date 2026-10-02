@@ -90,6 +90,27 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
+    /// Resend verification or security OTP code.
+    /// </summary>
+    [HttpPost("resend-otp")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ResendOtp(
+        [FromBody] ResendOtpRequest request, 
+        [FromServices] IValidator<ResendOtpRequest> validator,
+        CancellationToken cancellationToken)
+    {
+        var validation = await validator.ValidateAsync(request, cancellationToken);
+        if (!validation.IsValid)
+        {
+            return BadRequest(new { errors = validation.Errors.Select(e => e.ErrorMessage) });
+        }
+
+        await _authService.ResendOtpAsync(request, cancellationToken);
+        return Ok(new { message = "If the account exists, a new verification code has been sent." });
+    }
+
+    /// <summary>
     /// Log in with email and password to receive JWT access and refresh tokens.
     /// </summary>
     [HttpPost("login")]
