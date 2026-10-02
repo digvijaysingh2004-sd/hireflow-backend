@@ -9,11 +9,20 @@
       "HireFlow.Identity.Application/1.0.0": {
         "dependencies": {
           "BuildingBlocks.Contracts": "1.0.0",
+          "FluentValidation": "12.1.1",
           "HireFlow.Contracts": "1.0.0",
           "HireFlow.Identity.Domain": "1.0.0"
         },
         "runtime": {
           "HireFlow.Identity.Application.dll": {}
+        }
+      },
+      "FluentValidation/12.1.1": {
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.1.1.0"
+          }
         }
       },
       "BuildingBlocks.Contracts/1.0.0": {
@@ -47,6 +56,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "FluentValidation/12.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EPpkIe1yh1a0OXyC100oOA8WMbZvqUu5plwhvYcb7oSELfyUZzfxV48BLhvs3kKo4NwG7MGLNgy1RJiYtT8Dpw==",
+      "path": "fluentvalidation/12.1.1",
+      "hashPath": "fluentvalidation.12.1.1.nupkg.sha512"
     },
     "BuildingBlocks.Contracts/1.0.0": {
       "type": "project",

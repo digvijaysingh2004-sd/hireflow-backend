@@ -9,3 +9,4 @@ C:\digvijayProjects\hireflow\src\Contracts\HireFlow.Contracts\obj\Debug\net10.0\
 C:\digvijayProjects\hireflow\src\Contracts\HireFlow.Contracts\obj\Debug\net10.0\refint\HireFlow.Contracts.dll
 C:\digvijayProjects\hireflow\src\Contracts\HireFlow.Contracts\obj\Debug\net10.0\HireFlow.Contracts.pdb
 C:\digvijayProjects\hireflow\src\Contracts\HireFlow.Contracts\obj\Debug\net10.0\ref\HireFlow.Contracts.dll
+C:\digvijayProjects\hireflow\src\Contracts\HireFlow.Contracts\obj\Debug\net10.0\HireFlow.Contracts.sourcelink.json

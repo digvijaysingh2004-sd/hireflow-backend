@@ -1,0 +1,25 @@
+# ASP.NET Core & .NET build artifacts
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+.vs/
+.idea/
+.vscode/
+
+# Secrets & Environment variables
+*.env
+!.env.example
+appsettings.Development.local.json
+
+# Docker
+hireflow-postgres-data/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store

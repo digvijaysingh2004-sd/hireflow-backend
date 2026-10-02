@@ -21,3 +21,6 @@ C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Inf
 C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Infrastructure\obj\Debug\net10.0\refint\HireFlow.Notification.Infrastructure.dll
 C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Infrastructure\obj\Debug\net10.0\HireFlow.Notification.Infrastructure.pdb
 C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Infrastructure\obj\Debug\net10.0\ref\HireFlow.Notification.Infrastructure.dll
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Infrastructure\bin\Debug\net10.0\HireFlow.Notification.Infrastructure.runtimeconfig.json
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Infrastructure\obj\Debug\net10.0\HireFlow.Notification.Infrastructure.sourcelink.json
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Infrastructure\obj\Debug\net10.0\HireFlow.Notification.Infrastructure.genruntimeconfig.cache

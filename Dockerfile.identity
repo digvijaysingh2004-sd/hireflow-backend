@@ -1,0 +1,27 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy all project files for layer caching
+COPY ["HireFlow.sln", "./"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Contracts/BuildingBlocks.Contracts.csproj", "src/BuildingBlocks/BuildingBlocks.Contracts/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj", "src/BuildingBlocks/BuildingBlocks.Infrastructure/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Observability/BuildingBlocks.Observability.csproj", "src/BuildingBlocks/BuildingBlocks.Observability/"]
+COPY ["src/Contracts/HireFlow.Contracts/HireFlow.Contracts.csproj", "src/Contracts/HireFlow.Contracts/"]
+COPY ["src/Services/Identity/HireFlow.Identity.Domain/HireFlow.Identity.Domain.csproj", "src/Services/Identity/HireFlow.Identity.Domain/"]
+COPY ["src/Services/Identity/HireFlow.Identity.Application/HireFlow.Identity.Application.csproj", "src/Services/Identity/HireFlow.Identity.Application/"]
+COPY ["src/Services/Identity/HireFlow.Identity.Infrastructure/HireFlow.Identity.Infrastructure.csproj", "src/Services/Identity/HireFlow.Identity.Infrastructure/"]
+COPY ["src/Services/Identity/HireFlow.Identity.Api/HireFlow.Identity.Api.csproj", "src/Services/Identity/HireFlow.Identity.Api/"]
+
+RUN dotnet restore "src/Services/Identity/HireFlow.Identity.Api/HireFlow.Identity.Api.csproj"
+
+# Copy source and publish
+COPY . .
+WORKDIR "/src/src/Services/Identity/HireFlow.Identity.Api"
+RUN dotnet publish "HireFlow.Identity.Api.csproj" -c Release -o /app/publish --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "HireFlow.Identity.Api.dll"]

@@ -9,3 +9,4 @@ C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Dom
 C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\refint\HireFlow.Notification.Domain.dll
 C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\HireFlow.Notification.Domain.pdb
 C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\ref\HireFlow.Notification.Domain.dll
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\HireFlow.Notification.Domain.sourcelink.json

@@ -21,3 +21,6 @@ C:\digvijayProjects\hireflow\src\Services\Hiring\HireFlow.Hiring.Infrastructure\
 C:\digvijayProjects\hireflow\src\Services\Hiring\HireFlow.Hiring.Infrastructure\obj\Debug\net10.0\refint\HireFlow.Hiring.Infrastructure.dll
 C:\digvijayProjects\hireflow\src\Services\Hiring\HireFlow.Hiring.Infrastructure\obj\Debug\net10.0\HireFlow.Hiring.Infrastructure.pdb
 C:\digvijayProjects\hireflow\src\Services\Hiring\HireFlow.Hiring.Infrastructure\obj\Debug\net10.0\ref\HireFlow.Hiring.Infrastructure.dll
+C:\digvijayProjects\hireflow\src\Services\Hiring\HireFlow.Hiring.Infrastructure\bin\Debug\net10.0\HireFlow.Hiring.Infrastructure.runtimeconfig.json
+C:\digvijayProjects\hireflow\src\Services\Hiring\HireFlow.Hiring.Infrastructure\obj\Debug\net10.0\HireFlow.Hiring.Infrastructure.sourcelink.json
+C:\digvijayProjects\hireflow\src\Services\Hiring\HireFlow.Hiring.Infrastructure\obj\Debug\net10.0\HireFlow.Hiring.Infrastructure.genruntimeconfig.cache

@@ -9,3 +9,4 @@ C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Contracts\obj\Deb
 C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Contracts\obj\Debug\net10.0\refint\BuildingBlocks.Contracts.dll
 C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Contracts\obj\Debug\net10.0\BuildingBlocks.Contracts.pdb
 C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Contracts\obj\Debug\net10.0\ref\BuildingBlocks.Contracts.dll
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Contracts\obj\Debug\net10.0\BuildingBlocks.Contracts.sourcelink.json

@@ -9,3 +9,5 @@ C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj
 C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\refint\BuildingBlocks.Observability.dll
 C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.pdb
 C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\ref\BuildingBlocks.Observability.dll
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.csproj.AssemblyReference.cache
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.sourcelink.json

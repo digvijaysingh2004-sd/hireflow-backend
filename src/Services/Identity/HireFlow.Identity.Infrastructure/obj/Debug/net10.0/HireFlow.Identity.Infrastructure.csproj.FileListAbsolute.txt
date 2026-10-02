@@ -21,3 +21,6 @@ C:\digvijayProjects\hireflow\src\Services\Identity\HireFlow.Identity.Infrastruct
 C:\digvijayProjects\hireflow\src\Services\Identity\HireFlow.Identity.Infrastructure\obj\Debug\net10.0\refint\HireFlow.Identity.Infrastructure.dll
 C:\digvijayProjects\hireflow\src\Services\Identity\HireFlow.Identity.Infrastructure\obj\Debug\net10.0\HireFlow.Identity.Infrastructure.pdb
 C:\digvijayProjects\hireflow\src\Services\Identity\HireFlow.Identity.Infrastructure\obj\Debug\net10.0\ref\HireFlow.Identity.Infrastructure.dll
+C:\digvijayProjects\hireflow\src\Services\Identity\HireFlow.Identity.Infrastructure\bin\Debug\net10.0\HireFlow.Identity.Infrastructure.runtimeconfig.json
+C:\digvijayProjects\hireflow\src\Services\Identity\HireFlow.Identity.Infrastructure\obj\Debug\net10.0\HireFlow.Identity.Infrastructure.sourcelink.json
+C:\digvijayProjects\hireflow\src\Services\Identity\HireFlow.Identity.Infrastructure\obj\Debug\net10.0\HireFlow.Identity.Infrastructure.genruntimeconfig.cache
