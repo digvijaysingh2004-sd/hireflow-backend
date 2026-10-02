@@ -54,7 +54,7 @@ docker compose up -d postgres mailpit
 
 ---
 
-### 2. Run the Microservices
+### 2. Run Individual Microservices
 
 #### Run Identity API (Port 5218)
 ```bash
@@ -75,20 +75,20 @@ dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launc
 
 ### 3. Run All Microservices at Once
 
-- **Windows Batch (CMD or double-click)**:
-  ```cmd
-  .\run-all.bat
-  ```
+#### PowerShell One-Liner:
+```powershell
+Start-Process dotnet -ArgumentList "run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http"
+```
 
-- **PowerShell**:
-  ```powershell
-  powershell -ExecutionPolicy Bypass -File .\run-all-services.ps1
-  ```
+#### PowerShell Script:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\run-all-services.ps1
+```
 
-- **PowerShell One-Liner**:
-  ```powershell
-  Start-Process dotnet -ArgumentList "run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http"
-  ```
+#### Windows Batch (CMD / Double-Click):
+```cmd
+.\run-all.bat
+```
 
 ---
 
