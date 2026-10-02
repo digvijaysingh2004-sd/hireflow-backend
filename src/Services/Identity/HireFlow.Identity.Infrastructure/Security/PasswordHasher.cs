@@ -34,7 +34,16 @@ public class PasswordHasher : IPasswordHasher
         string[] segments = hashedPassword.Split(SegmentDelimiter);
         if (segments.Length != 4)
         {
-            return false;
+            try
+            {
+                var msHasher = new Microsoft.AspNetCore.Identity.PasswordHasher<object>();
+                var verification = msHasher.VerifyHashedPassword(new object(), hashedPassword, password);
+                return verification != Microsoft.AspNetCore.Identity.PasswordVerificationResult.Failed;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         byte[] salt = Convert.FromBase64String(segments[0]);

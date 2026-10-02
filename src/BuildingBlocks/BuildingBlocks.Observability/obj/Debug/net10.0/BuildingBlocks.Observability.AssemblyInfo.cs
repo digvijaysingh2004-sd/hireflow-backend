@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BuildingBlocks.Observability")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4fdb47fdc3c705d7574dfc5a6d401b18a4c69486")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca75cbb102beb8e49bc8d52a136435380139d731")]
 [assembly: System.Reflection.AssemblyProductAttribute("BuildingBlocks.Observability")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BuildingBlocks.Observability")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

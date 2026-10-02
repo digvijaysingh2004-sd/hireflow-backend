@@ -33,7 +33,7 @@ public static class IdentityDbSeeder
         await context.SaveChangesAsync();
 
         // 2. Seed Default User Logins for testing/demo
-        var passwordHasher = new PasswordHasher<User>();
+        var passwordHasher = scope.ServiceProvider.GetRequiredService<HireFlow.Identity.Application.Interfaces.IPasswordHasher>();
 
         var adminRole = await context.Roles.FirstAsync(r => r.Name == Role.Admin);
         var recruiterRole = await context.Roles.FirstAsync(r => r.Name == Role.Recruiter);
@@ -98,9 +98,10 @@ public static class IdentityDbSeeder
 
         foreach (var (user, password, role) in seedUsers)
         {
-            if (!await context.Users.AnyAsync(u => u.Email == user.Email))
+            var existing = await context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+            if (existing == null)
             {
-                user.PasswordHash = passwordHasher.HashPassword(user, password);
+                user.PasswordHash = passwordHasher.HashPassword(password);
                 await context.Users.AddAsync(user);
                 await context.UserRoles.AddAsync(new UserRole
                 {
@@ -108,6 +109,14 @@ public static class IdentityDbSeeder
                     RoleId = role.Id
                 });
                 logger.LogInformation("Seeded demo user: {Email} with role {Role}", user.Email, role.Name);
+            }
+            else
+            {
+                existing.PasswordHash = passwordHasher.HashPassword(password);
+                existing.FailedLoginAttempts = 0;
+                existing.LockedUntilUtc = null;
+                existing.IsActive = true;
+                existing.IsEmailVerified = true;
             }
         }
 
