@@ -71,6 +71,11 @@ dotnet run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile ht
 dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http
 ```
 
+### Run All Services at Once
+```bash
+dotnet run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http & dotnet run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http & dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http &
+```
+
 ---
 
 ### 3. Run All Microservices at Once
@@ -78,6 +83,15 @@ dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launc
 #### PowerShell One-Liner:
 ```powershell
 Start-Process dotnet -ArgumentList "run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http"
+```
+
+---
+
+### 4. Run All Microservices at Once
+
+#### CMD One-Liner:
+```cmd
+start "" dotnet run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http & start "" dotnet run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http & start "" dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http
 ```
 
 ---
