@@ -12,6 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddIdentityApplication();
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Add controllers
 builder.Services.AddControllers();
 
@@ -76,6 +87,8 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+app.UseCors("AllowAll");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -83,6 +96,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "HireFlow Identity API v1");
+        c.SwaggerEndpoint("http://localhost:5104/swagger/v1/swagger.json", "HireFlow Hiring API v1");
+        c.SwaggerEndpoint("http://localhost:5289/swagger/v1/swagger.json", "HireFlow Notification API v1");
     });
 }
 

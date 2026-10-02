@@ -289,18 +289,22 @@ public class JobService : IJobService
         j.Title,
         j.Slug,
         j.Description,
+        j.Requirements,
         j.Location,
         j.EmploymentType,
+        j.Status,
         j.ExperienceMinYears,
         j.ExperienceMaxYears,
         j.SalaryMin,
         j.SalaryMax,
-        j.Status,
+        j.Currency,
+        j.Skills,
         j.CreatedByUserId,
+        j.CreatedAtUtc,
+        j.UpdatedAtUtc,
         j.PublishedAtUtc,
         j.ClosingAtUtc,
-        j.CreatedAtUtc,
-        j.UpdatedAtUtc
+        j.ClosedAtUtc
     );
 
     private static string GenerateSlug(string text)

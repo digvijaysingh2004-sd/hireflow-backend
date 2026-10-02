@@ -13,4 +13,3 @@ public class AuditLog
     public string? IpAddress { get; set; }
     public DateTimeOffset CreatedAtUtc { get; set; } = DateTimeOffset.UtcNow;
 }
-

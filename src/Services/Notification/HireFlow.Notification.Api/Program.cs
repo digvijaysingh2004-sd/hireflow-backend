@@ -13,6 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddNotificationApplication();
 builder.Services.AddNotificationInfrastructure(builder.Configuration);
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
 
 // Configure JWT Authentication
@@ -76,6 +87,8 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+app.UseCors("AllowAll");
+
 // Auto-seed notification templates
 using (var scope = app.Services.CreateScope())
 {
@@ -98,6 +111,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "HireFlow Notification API v1");
+        c.SwaggerEndpoint("http://localhost:5218/swagger/v1/swagger.json", "HireFlow Identity API v1");
+        c.SwaggerEndpoint("http://localhost:5104/swagger/v1/swagger.json", "HireFlow Hiring API v1");
     });
 }
 

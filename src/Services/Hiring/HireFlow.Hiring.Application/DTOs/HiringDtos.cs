@@ -52,24 +52,30 @@ public record CreateJobRequest(
     Guid CompanyId,
     string Title,
     string Description,
+    string? Requirements,
     string? Location,
     string EmploymentType,
     short? ExperienceMinYears,
     short? ExperienceMaxYears,
     decimal? SalaryMin,
     decimal? SalaryMax,
+    string? Currency,
+    string[]? Skills,
     DateTimeOffset? ClosingAtUtc
 );
 
 public record UpdateJobRequest(
     string Title,
     string Description,
+    string? Requirements,
     string? Location,
     string EmploymentType,
     short? ExperienceMinYears,
     short? ExperienceMaxYears,
     decimal? SalaryMin,
     decimal? SalaryMax,
+    string? Currency,
+    string[]? Skills,
     DateTimeOffset? ClosingAtUtc
 );
 
@@ -80,18 +86,22 @@ public record JobDto(
     string Title,
     string Slug,
     string Description,
+    string? Requirements,
     string? Location,
     string EmploymentType,
+    string Status,
     short? ExperienceMinYears,
     short? ExperienceMaxYears,
     decimal? SalaryMin,
     decimal? SalaryMax,
-    string Status,
+    string Currency,
+    string[] Skills,
     Guid CreatedByUserId,
+    DateTimeOffset CreatedAtUtc,
+    DateTimeOffset UpdatedAtUtc,
     DateTimeOffset? PublishedAtUtc,
     DateTimeOffset? ClosingAtUtc,
-    DateTimeOffset CreatedAtUtc,
-    DateTimeOffset UpdatedAtUtc
+    DateTimeOffset? ClosedAtUtc
 );
 
 public record JobStatisticsDto(
@@ -151,7 +161,7 @@ public record RescheduleInterviewRequest(
 );
 
 public record UpdateInterviewStatusRequest(
-    string Status, // Scheduled, Completed, Cancelled
+    string Status,
     string? Notes
 );
 
