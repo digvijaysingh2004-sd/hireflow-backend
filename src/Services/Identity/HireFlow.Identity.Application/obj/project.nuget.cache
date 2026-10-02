@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1tAJZ9RSbUU=",
+  "success": true,
+  "projectFilePath": "C:\\digvijayProjects\\hireflow\\src\\Services\\Identity\\HireFlow.Identity.Application\\HireFlow.Identity.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kisha\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512"
+  ],
+  "logs": []
+}

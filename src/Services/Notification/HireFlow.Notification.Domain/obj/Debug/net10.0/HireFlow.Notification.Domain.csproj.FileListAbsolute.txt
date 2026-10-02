@@ -1,0 +1,11 @@
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\bin\Debug\net10.0\HireFlow.Notification.Domain.deps.json
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\bin\Debug\net10.0\HireFlow.Notification.Domain.dll
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\bin\Debug\net10.0\HireFlow.Notification.Domain.pdb
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\HireFlow.Notification.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\HireFlow.Notification.Domain.AssemblyInfoInputs.cache
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\HireFlow.Notification.Domain.AssemblyInfo.cs
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\HireFlow.Notification.Domain.csproj.CoreCompileInputs.cache
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\HireFlow.Notification.Domain.dll
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\refint\HireFlow.Notification.Domain.dll
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\HireFlow.Notification.Domain.pdb
+C:\digvijayProjects\hireflow\src\Services\Notification\HireFlow.Notification.Domain\obj\Debug\net10.0\ref\HireFlow.Notification.Domain.dll

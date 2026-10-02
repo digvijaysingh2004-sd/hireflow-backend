@@ -1,0 +1,11 @@
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\bin\Debug\net10.0\BuildingBlocks.Observability.deps.json
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\bin\Debug\net10.0\BuildingBlocks.Observability.dll
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\bin\Debug\net10.0\BuildingBlocks.Observability.pdb
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.GeneratedMSBuildEditorConfig.editorconfig
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.AssemblyInfoInputs.cache
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.AssemblyInfo.cs
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.csproj.CoreCompileInputs.cache
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.dll
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\refint\BuildingBlocks.Observability.dll
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\BuildingBlocks.Observability.pdb
+C:\digvijayProjects\hireflow\src\BuildingBlocks\BuildingBlocks.Observability\obj\Debug\net10.0\ref\BuildingBlocks.Observability.dll

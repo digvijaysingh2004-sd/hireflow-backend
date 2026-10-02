@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "dgSpecHash": "YLL9cUmA9ac=",
+  "success": true,
+  "projectFilePath": "C:\\digvijayProjects\\hireflow\\src\\BuildingBlocks\\BuildingBlocks.Infrastructure\\BuildingBlocks.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kisha\\.nuget\\packages\\aspnetcore.healthchecks.redis\\9.0.0\\aspnetcore.healthchecks.redis.9.0.0.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.12\\microsoft.extensions.caching.abstractions.10.0.12.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\10.0.12\\microsoft.extensions.caching.stackexchangeredis.10.0.12.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.12\\microsoft.extensions.dependencyinjection.abstractions.10.0.12.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\8.0.1\\microsoft.extensions.diagnostics.abstractions.8.0.1.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.diagnostics.healthchecks\\8.0.11\\microsoft.extensions.diagnostics.healthchecks.8.0.11.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.diagnostics.healthchecks.abstractions\\8.0.11\\microsoft.extensions.diagnostics.healthchecks.abstractions.8.0.11.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\8.0.0\\microsoft.extensions.fileproviders.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\8.0.1\\microsoft.extensions.hosting.abstractions.8.0.1.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.12\\microsoft.extensions.logging.abstractions.10.0.12.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.options\\10.0.12\\microsoft.extensions.options.10.0.12.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.12\\microsoft.extensions.primitives.10.0.12.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\respite\\3.3.1\\respite.3.3.1.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\stackexchange.redis\\3.3.1\\stackexchange.redis.3.3.1.nupkg.sha512",
+    "C:\\Users\\kisha\\.nuget\\packages\\system.io.hashing\\10.0.12\\system.io.hashing.10.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,67 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "HireFlow.Hiring.Application/1.0.0": {
+        "dependencies": {
+          "BuildingBlocks.Contracts": "1.0.0",
+          "HireFlow.Contracts": "1.0.0",
+          "HireFlow.Hiring.Domain": "1.0.0"
+        },
+        "runtime": {
+          "HireFlow.Hiring.Application.dll": {}
+        }
+      },
+      "BuildingBlocks.Contracts/1.0.0": {
+        "runtime": {
+          "BuildingBlocks.Contracts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "HireFlow.Contracts/1.0.0": {
+        "runtime": {
+          "HireFlow.Contracts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "HireFlow.Hiring.Domain/1.0.0": {
+        "runtime": {
+          "HireFlow.Hiring.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HireFlow.Hiring.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BuildingBlocks.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HireFlow.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HireFlow.Hiring.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
