@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HireFlow.Identity.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7df5a655776437f1f43b00cc703045ddf86215a3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d1aafb49470352ab56a0d9a52aa6978f031cc2f")]
 [assembly: System.Reflection.AssemblyProductAttribute("HireFlow.Identity.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HireFlow.Identity.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
