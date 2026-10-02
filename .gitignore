@@ -28,3 +28,9 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 .DS_Store
+
+## Markdown files (Ignore all .md files EXCEPT README.md)
+*.md
+!README.md
+**/*.md
+!**/README.md

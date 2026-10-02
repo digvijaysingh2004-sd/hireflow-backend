@@ -1,0 +1,26 @@
+# Stage 1: Build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY ["src/Services/Hiring/HireFlow.Hiring.Api/HireFlow.Hiring.Api.csproj", "src/Services/Hiring/HireFlow.Hiring.Api/"]
+COPY ["src/Services/Hiring/HireFlow.Hiring.Application/HireFlow.Hiring.Application.csproj", "src/Services/Hiring/HireFlow.Hiring.Application/"]
+COPY ["src/Services/Hiring/HireFlow.Hiring.Domain/HireFlow.Hiring.Domain.csproj", "src/Services/Hiring/HireFlow.Hiring.Domain/"]
+COPY ["src/Services/Hiring/HireFlow.Hiring.Infrastructure/HireFlow.Hiring.Infrastructure.csproj", "src/Services/Hiring/HireFlow.Hiring.Infrastructure/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Contracts/BuildingBlocks.Contracts.csproj", "src/BuildingBlocks/BuildingBlocks.Contracts/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj", "src/BuildingBlocks/BuildingBlocks.Infrastructure/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Observability/BuildingBlocks.Observability.csproj", "src/BuildingBlocks/BuildingBlocks.Observability/"]
+COPY ["src/Contracts/HireFlow.Contracts/HireFlow.Contracts.csproj", "src/Contracts/HireFlow.Contracts/"]
+
+RUN dotnet restore "src/Services/Hiring/HireFlow.Hiring.Api/HireFlow.Hiring.Api.csproj"
+
+COPY . .
+WORKDIR "/src/src/Services/Hiring/HireFlow.Hiring.Api"
+RUN dotnet publish "HireFlow.Hiring.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "HireFlow.Hiring.Api.dll"]

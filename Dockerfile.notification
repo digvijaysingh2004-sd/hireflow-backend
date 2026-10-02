@@ -1,0 +1,26 @@
+# Stage 1: Build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY ["src/Services/Notification/HireFlow.Notification.Api/HireFlow.Notification.Api.csproj", "src/Services/Notification/HireFlow.Notification.Api/"]
+COPY ["src/Services/Notification/HireFlow.Notification.Application/HireFlow.Notification.Application.csproj", "src/Services/Notification/HireFlow.Notification.Application/"]
+COPY ["src/Services/Notification/HireFlow.Notification.Domain/HireFlow.Notification.Domain.csproj", "src/Services/Notification/HireFlow.Notification.Domain/"]
+COPY ["src/Services/Notification/HireFlow.Notification.Infrastructure/HireFlow.Notification.Infrastructure.csproj", "src/Services/Notification/HireFlow.Notification.Infrastructure/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Contracts/BuildingBlocks.Contracts.csproj", "src/BuildingBlocks/BuildingBlocks.Contracts/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj", "src/BuildingBlocks/BuildingBlocks.Infrastructure/"]
+COPY ["src/BuildingBlocks/BuildingBlocks.Observability/BuildingBlocks.Observability.csproj", "src/BuildingBlocks/BuildingBlocks.Observability/"]
+COPY ["src/Contracts/HireFlow.Contracts/HireFlow.Contracts.csproj", "src/Contracts/HireFlow.Contracts/"]
+
+RUN dotnet restore "src/Services/Notification/HireFlow.Notification.Api/HireFlow.Notification.Api.csproj"
+
+COPY . .
+WORKDIR "/src/src/Services/Notification/HireFlow.Notification.Api"
+RUN dotnet publish "HireFlow.Notification.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "HireFlow.Notification.Api.dll"]
