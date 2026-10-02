@@ -103,14 +103,16 @@ public class JobService : IJobService
         }
 
         var totalCount = await query.CountAsync(cancellationToken);
-        var items = await query
+        var entities = await query
             .OrderByDescending(j => j.CreatedAtUtc)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(j => MapToDto(j))
             .ToListAsync(cancellationToken);
 
+        var items = entities.Select(MapToDto).ToList();
+
         return Result<PagedResult<JobDto>>.Success(PagedResult<JobDto>.Create(items, page, pageSize, totalCount));
+
     }
 
     public async Task<Result<JobDto>> GetJobByIdAsync(Guid jobId, CancellationToken cancellationToken = default)

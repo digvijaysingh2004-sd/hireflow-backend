@@ -14,17 +14,25 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("HiringDatabase")
-            ?? configuration["HIRING_DB_CONNECTION"]
-            ?? "Host=localhost;Port=5432;Database=hireflow_hiring;Username=postgres;Password=12345678";
+            ?? configuration["HIRING_DB_CONNECTION"];
+        var useInMemory = configuration["EF_PROVIDER"] == "InMemory" || string.IsNullOrEmpty(connectionString);
 
         services.AddDbContext<HiringDbContext>(options =>
         {
-            options.UseNpgsql(connectionString, npgsqlOptions =>
+            if (useInMemory)
             {
-                npgsqlOptions.MigrationsAssembly(typeof(HiringDbContext).Assembly.FullName);
-                npgsqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
-            });
+                options.UseInMemoryDatabase("hireflow_hiring_test");
+            }
+            else
+            {
+                options.UseNpgsql(connectionString, npgsqlOptions =>
+                {
+                    npgsqlOptions.MigrationsAssembly(typeof(HiringDbContext).Assembly.FullName);
+                    npgsqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
+                });
+            }
         });
+
 
         // Register application services
         services.AddScoped<ICompanyService, CompanyService>();

@@ -14,17 +14,25 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("NotificationDatabase")
-            ?? configuration["NOTIFICATION_DB_CONNECTION"]
-            ?? "Host=localhost;Port=5432;Database=hireflow_notification;Username=postgres;Password=12345678";
+            ?? configuration["NOTIFICATION_DB_CONNECTION"];
+        var useInMemory = configuration["EF_PROVIDER"] == "InMemory" || string.IsNullOrEmpty(connectionString);
 
         services.AddDbContext<NotificationDbContext>(options =>
         {
-            options.UseNpgsql(connectionString, npgsqlOptions =>
+            if (useInMemory)
             {
-                npgsqlOptions.MigrationsAssembly(typeof(NotificationDbContext).Assembly.FullName);
-                npgsqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
-            });
+                options.UseInMemoryDatabase("hireflow_notification_test");
+            }
+            else
+            {
+                options.UseNpgsql(connectionString, npgsqlOptions =>
+                {
+                    npgsqlOptions.MigrationsAssembly(typeof(NotificationDbContext).Assembly.FullName);
+                    npgsqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
+                });
+            }
         });
+
 
         // Register SMTP / Email delivery
         services.AddScoped<IEmailSender, SmtpEmailSender>();

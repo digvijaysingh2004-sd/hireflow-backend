@@ -13,15 +13,25 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("IdentityDatabase")
             ?? configuration["IDENTITY_DB_CONNECTION"];
+        var useInMemory = configuration["EF_PROVIDER"] == "InMemory" || string.IsNullOrEmpty(connectionString);
+
 
         services.AddDbContext<IdentityDbContext>(options =>
         {
-            options.UseNpgsql(connectionString, npgsqlOptions =>
+            if (useInMemory)
             {
-                npgsqlOptions.MigrationsAssembly(typeof(IdentityDbContext).Assembly.FullName);
-                npgsqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
-            });
+                options.UseInMemoryDatabase("hireflow_identity_test");
+            }
+            else
+            {
+                options.UseNpgsql(connectionString, npgsqlOptions =>
+                {
+                    npgsqlOptions.MigrationsAssembly(typeof(IdentityDbContext).Assembly.FullName);
+                    npgsqlOptions.EnableRetryOnFailure(maxRetryCount: 3);
+                });
+            }
         });
+
 
         services.AddSingleton<HireFlow.Identity.Application.Interfaces.IPasswordHasher, Security.PasswordHasher>();
         services.AddSingleton<HireFlow.Identity.Application.Interfaces.ITokenService, Security.TokenService>();

@@ -136,3 +136,6 @@ app.MapGet("/", () => Results.Ok(new { service = "HireFlow.Notification.Api", st
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
+

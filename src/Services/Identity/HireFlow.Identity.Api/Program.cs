@@ -126,3 +126,6 @@ app.MapGet("/", () => Results.Ok(new { Service = "HireFlow.Identity.Api", Status
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
+
