@@ -57,4 +57,6 @@ jobs:
       run: dotnet build HireFlow.sln --no-restore --configuration Release
 
     - name: Run unit and integration tests
+      env:
+        EF_PROVIDER: InMemory
       run: dotnet test HireFlow.sln --no-build --configuration Release --verbosity normal

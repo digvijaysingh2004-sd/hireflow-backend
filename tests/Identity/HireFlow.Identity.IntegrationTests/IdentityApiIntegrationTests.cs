@@ -19,13 +19,7 @@ public class IdentityApiIntegrationTests : IClassFixture<WebApplicationFactory<P
     {
         _factory = factory.WithWebHostBuilder(builder =>
         {
-            builder.ConfigureAppConfiguration((context, config) =>
-            {
-                config.AddInMemoryCollection(new Dictionary<string, string?>
-                {
-                    { "EF_PROVIDER", "InMemory" }
-                });
-            });
+            builder.UseSetting("EF_PROVIDER", "InMemory");
         });
     }
 
