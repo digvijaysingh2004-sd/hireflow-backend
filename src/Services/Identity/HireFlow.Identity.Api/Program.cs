@@ -13,13 +13,29 @@ builder.Services.AddIdentityApplication();
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 
 // Add CORS
+var frontendOrigin = builder.Configuration["Frontend:Origin"] 
+    ?? builder.Configuration["Frontend__Origin"] 
+    ?? "http://localhost:5173";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("HireFlowCorsPolicy", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        if (builder.Environment.IsDevelopment())
+        {
+            policy.SetIsOriginAllowed(_ => true)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        }
+        else
+        {
+            var allowedOrigins = new List<string> { frontendOrigin.TrimEnd('/') };
+            policy.WithOrigins(allowedOrigins.ToArray())
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        }
     });
 });
 
@@ -86,9 +102,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
-
-app.UseCors("AllowAll");
-
+ 
+app.UseCors("HireFlowCorsPolicy");
+ 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -120,7 +136,17 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapGet("/", () => Results.Ok(new { Service = "HireFlow.Identity.Api", Status = "Healthy" }))
+// Standard health endpoints
+app.MapGet("/health/live", () => Results.Ok(new { status = "Healthy", service = "Identity", version = "1.0.0" }));
+app.MapGet("/health/ready", async (IdentityDbContext db) =>
+{
+    var canConnect = await db.Database.CanConnectAsync();
+    return canConnect
+        ? Results.Ok(new { status = "Ready", service = "Identity", database = "Connected" })
+        : Results.Problem("Database unavailable", statusCode: 503);
+});
+app.MapGet("/version", () => Results.Ok(new { service = "HireFlow.Identity.Api", version = "1.0.0", environment = app.Environment.EnvironmentName }));
+app.MapGet("/", () => Results.Ok(new { service = "HireFlow.Identity.Api", status = "Healthy" }))
    .WithName("Health");
 
 app.MapControllers();
