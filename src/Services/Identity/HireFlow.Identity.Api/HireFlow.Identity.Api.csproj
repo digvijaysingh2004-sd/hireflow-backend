@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HireFlow.Identity.Application\HireFlow.Identity.Application.csproj" />
     <ProjectReference Include="..\HireFlow.Identity.Infrastructure\HireFlow.Identity.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Infrastructure\BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Observability\BuildingBlocks.Observability.csproj" />
   </ItemGroup>
 

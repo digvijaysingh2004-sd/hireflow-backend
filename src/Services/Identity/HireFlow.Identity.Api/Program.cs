@@ -1,4 +1,6 @@
 using System.Text;
+using BuildingBlocks.Infrastructure;
+using BuildingBlocks.Observability;
 using HireFlow.Identity.Application;
 using HireFlow.Identity.Infrastructure;
 using HireFlow.Identity.Infrastructure.Persistence;
@@ -8,7 +10,11 @@ using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add cloud observability (Honeycomb OpenTelemetry)
+builder.Services.AddHireFlowObservability(builder.Configuration, "HireFlow.Identity");
+
 // Add application layer & infrastructure layer
+builder.Services.AddBuildingBlocksInfrastructure(builder.Configuration);
 builder.Services.AddIdentityApplication();
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 

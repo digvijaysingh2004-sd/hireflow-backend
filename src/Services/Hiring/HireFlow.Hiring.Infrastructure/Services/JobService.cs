@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using BuildingBlocks.Infrastructure.Caching;
 using HireFlow.Hiring.Application.Common;
 using HireFlow.Hiring.Application.DTOs;
 using HireFlow.Hiring.Application.Interfaces;
@@ -11,10 +12,12 @@ namespace HireFlow.Hiring.Infrastructure.Services;
 public class JobService : IJobService
 {
     private readonly HiringDbContext _dbContext;
+    private readonly ICacheService _cacheService;
 
-    public JobService(HiringDbContext dbContext)
+    public JobService(HiringDbContext dbContext, ICacheService cacheService)
     {
         _dbContext = dbContext;
+        _cacheService = cacheService;
     }
 
     public async Task<Result<Guid>> CreateJobAsync(CreateJobRequest request, Guid currentUserId, CancellationToken cancellationToken = default)
@@ -65,6 +68,7 @@ public class JobService : IJobService
         });
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+        await _cacheService.RemoveByPrefixAsync("jobs:paged:", cancellationToken);
         return Result<Guid>.Success(job.Id, 201);
     }
 
@@ -112,11 +116,17 @@ public class JobService : IJobService
         var items = entities.Select(MapToDto).ToList();
 
         return Result<PagedResult<JobDto>>.Success(PagedResult<JobDto>.Create(items, page, pageSize, totalCount));
-
     }
 
     public async Task<Result<JobDto>> GetJobByIdAsync(Guid jobId, CancellationToken cancellationToken = default)
     {
+        var cacheKey = $"job:{jobId}";
+        var cachedJob = await _cacheService.GetAsync<JobDto>(cacheKey, cancellationToken);
+        if (cachedJob != null)
+        {
+            return Result<JobDto>.Success(cachedJob);
+        }
+
         var job = await _dbContext.Jobs
             .Include(j => j.Company)
             .AsNoTracking()
@@ -127,7 +137,9 @@ public class JobService : IJobService
             return Result<JobDto>.Failure("Job not found.", 404);
         }
 
-        return Result<JobDto>.Success(MapToDto(job));
+        var dto = MapToDto(job);
+        await _cacheService.SetAsync(cacheKey, dto, TimeSpan.FromMinutes(10), cancellationToken);
+        return Result<JobDto>.Success(dto);
     }
 
     public async Task<Result<JobDto>> UpdateJobAsync(
@@ -172,6 +184,8 @@ public class JobService : IJobService
         });
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+        await _cacheService.RemoveAsync($"job:{jobId}", cancellationToken);
+        await _cacheService.RemoveByPrefixAsync("jobs:paged:", cancellationToken);
         return Result<JobDto>.Success(MapToDto(job));
     }
 
@@ -199,6 +213,8 @@ public class JobService : IJobService
         });
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+        await _cacheService.RemoveAsync($"job:{jobId}", cancellationToken);
+        await _cacheService.RemoveByPrefixAsync("jobs:paged:", cancellationToken);
         return Result<bool>.Success(true);
     }
 
@@ -226,6 +242,8 @@ public class JobService : IJobService
         });
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+        await _cacheService.RemoveAsync($"job:{jobId}", cancellationToken);
+        await _cacheService.RemoveByPrefixAsync("jobs:paged:", cancellationToken);
         return Result<bool>.Success(true);
     }
 
@@ -255,6 +273,8 @@ public class JobService : IJobService
         });
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+        await _cacheService.RemoveAsync($"job:{jobId}", cancellationToken);
+        await _cacheService.RemoveByPrefixAsync("jobs:paged:", cancellationToken);
         return Result<bool>.Success(true);
     }
 

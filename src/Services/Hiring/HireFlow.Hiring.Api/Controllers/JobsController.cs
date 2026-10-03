@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using BuildingBlocks.Infrastructure.RateLimiting;
 using FluentValidation;
 using HireFlow.Hiring.Application.Common;
 using HireFlow.Hiring.Application.DTOs;
@@ -27,7 +28,9 @@ public class JobsController : ControllerBase
     /// </summary>
     [HttpGet]
     [AllowAnonymous]
+    [RateLimit(Policy = "hiring-job-search", MaxRequests = 60, WindowSeconds = 60)]
     [ProducesResponseType(typeof(PagedResult<JobDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> GetJobs(
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10,
@@ -45,8 +48,10 @@ public class JobsController : ControllerBase
     /// </summary>
     [HttpGet("{jobId:guid}")]
     [AllowAnonymous]
+    [RateLimit(Policy = "hiring-job-details", MaxRequests = 120, WindowSeconds = 60)]
     [ProducesResponseType(typeof(JobDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> GetJobById(Guid jobId, CancellationToken cancellationToken)
     {
         var result = await _jobService.GetJobByIdAsync(jobId, cancellationToken);

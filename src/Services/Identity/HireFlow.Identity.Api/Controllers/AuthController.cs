@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using BuildingBlocks.Infrastructure.RateLimiting;
 using FluentValidation;
 using HireFlow.Identity.Application.DTOs;
 using HireFlow.Identity.Application.Interfaces;
@@ -42,9 +43,11 @@ public class AuthController : ControllerBase
     /// Register a new user account.
     /// </summary>
     [HttpPost("register")]
+    [RateLimit(Policy = "identity-register", MaxRequests = 5, WindowSeconds = 900)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
         var validation = await _registerValidator.ValidateAsync(request, cancellationToken);
@@ -70,8 +73,10 @@ public class AuthController : ControllerBase
     /// Verify an email address using the 6-digit OTP code.
     /// </summary>
     [HttpPost("verify-email")]
+    [RateLimit(Policy = "identity-otp", MaxRequests = 5, WindowSeconds = 600)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request, CancellationToken cancellationToken)
     {
         var validation = await _verifyEmailValidator.ValidateAsync(request, cancellationToken);
@@ -93,8 +98,10 @@ public class AuthController : ControllerBase
     /// Resend verification or security OTP code.
     /// </summary>
     [HttpPost("resend-otp")]
+    [RateLimit(Policy = "identity-resend-otp", MaxRequests = 3, WindowSeconds = 900)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> ResendOtp(
         [FromBody] ResendOtpRequest request, 
         [FromServices] IValidator<ResendOtpRequest> validator,
@@ -114,11 +121,13 @@ public class AuthController : ControllerBase
     /// Log in with email and password to receive JWT access and refresh tokens.
     /// </summary>
     [HttpPost("login")]
+    [RateLimit(Policy = "identity-login", MaxRequests = 5, WindowSeconds = 900)]
     [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status423Locked)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
         var validation = await _loginValidator.ValidateAsync(request, cancellationToken);

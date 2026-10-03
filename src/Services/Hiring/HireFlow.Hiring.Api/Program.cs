@@ -1,4 +1,6 @@
 using System.Text;
+using BuildingBlocks.Infrastructure;
+using BuildingBlocks.Observability;
 using HireFlow.Hiring.Application;
 using HireFlow.Hiring.Infrastructure;
 using HireFlow.Hiring.Infrastructure.Persistence;
@@ -8,7 +10,11 @@ using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add cloud observability (Honeycomb OpenTelemetry)
+builder.Services.AddHireFlowObservability(builder.Configuration, "HireFlow.Hiring");
+
 // Add services to the container.
+builder.Services.AddBuildingBlocksInfrastructure(builder.Configuration);
 builder.Services.AddHiringApplication();
 builder.Services.AddHiringInfrastructure(builder.Configuration);
 

@@ -23,17 +23,26 @@ public class SmtpEmailSender : IEmailSender
     public async Task<(bool Success, string? ErrorMessage)> SendEmailAsync(string toEmail, string subject, string body, CancellationToken cancellationToken = default)
     {
         var host = _configuration["Smtp:Host"] ?? "localhost";
-        var port = int.TryParse(_configuration["Smtp:Port"], out var p) ? p : 1025;
-        var fromAddress = _configuration["Smtp:FromAddress"] ?? "no-reply@hireflow.local";
-        var fromDisplayName = _configuration["Smtp:FromName"] ?? "HireFlow Notification";
+        var port = int.TryParse(_configuration["Smtp:Port"], out var p) ? p : 587;
+        var fromAddress = _configuration["Smtp:SenderEmail"] ?? _configuration["Smtp:FromAddress"] ?? _configuration["Smtp:Username"] ?? "no-reply@hireflow.local";
+        var fromDisplayName = _configuration["Smtp:SenderName"] ?? _configuration["Smtp:FromName"] ?? "HireFlow Notifications";
+        var username = _configuration["Smtp:Username"];
+        var password = _configuration["Smtp:Password"];
+        var enableSsl = _configuration.GetValue<bool?>("Smtp:EnableSsl") ?? (port == 587 || port == 465 || host.Contains("gmail.com"));
 
         try
         {
             using var client = new SmtpClient(host, port)
             {
-                EnableSsl = false,
-                Timeout = 10000
+                EnableSsl = enableSsl,
+                Timeout = 15000
             };
+
+            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            {
+                client.UseDefaultCredentials = false;
+                client.Credentials = new System.Net.NetworkCredential(username.Trim(), password.Trim());
+            }
 
             using var message = new MailMessage
             {
@@ -45,7 +54,7 @@ public class SmtpEmailSender : IEmailSender
             message.To.Add(toEmail);
 
             await client.SendMailAsync(message, cancellationToken);
-            _logger.LogInformation("Email successfully sent via SMTP to {ToEmail}", toEmail);
+            _logger.LogInformation("Email successfully sent via SMTP ({Host}) to {ToEmail}", host, toEmail);
             return (true, null);
         }
         catch (Exception ex)

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using BuildingBlocks.Infrastructure.Idempotency;
 using FluentValidation;
 using HireFlow.Hiring.Application.Common;
 using HireFlow.Hiring.Application.DTOs;
@@ -24,6 +25,7 @@ public class InterviewsController : ControllerBase
     /// </summary>
     [HttpPost("api/v1/applications/{applicationId:guid}/interviews")]
     [Authorize(Roles = "Admin,Recruiter,HiringManager")]
+    [Idempotent]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

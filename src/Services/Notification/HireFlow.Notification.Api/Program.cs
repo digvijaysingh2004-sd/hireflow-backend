@@ -1,4 +1,6 @@
 using System.Text;
+using BuildingBlocks.Infrastructure;
+using BuildingBlocks.Observability;
 using HireFlow.Notification.Application;
 using HireFlow.Notification.Infrastructure;
 using HireFlow.Notification.Infrastructure.Persistence;
@@ -9,7 +11,11 @@ using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add cloud observability (Honeycomb OpenTelemetry)
+builder.Services.AddHireFlowObservability(builder.Configuration, "HireFlow.Notification");
+
 // Register layers
+builder.Services.AddBuildingBlocksInfrastructure(builder.Configuration);
 builder.Services.AddNotificationApplication();
 builder.Services.AddNotificationInfrastructure(builder.Configuration);
 

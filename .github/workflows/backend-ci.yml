@@ -1,0 +1,60 @@
+name: HireFlow Backend CI & Security Scan
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  security-and-secret-scan:
+    name: Secret & Vulnerability Scan
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # 1. Gitleaks scan to prevent leaking API keys, passwords, or tokens
+    - name: Run Gitleaks Secret Scanner
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      continue-on-error: false
+
+    # 2. Dotnet package vulnerability audit
+    - name: Setup .NET 10 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore HireFlow.sln
+
+    - name: Run .NET Dependency Vulnerability Audit
+      run: dotnet list package --vulnerable --include-transitive
+
+  build-and-test:
+    name: Build & Test Microservices (.NET 10)
+    needs: [security-and-secret-scan]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore HireFlow.sln
+
+    - name: Build solution (Release)
+      run: dotnet build HireFlow.sln --no-restore --configuration Release
+
+    - name: Run unit and integration tests
+      run: dotnet test HireFlow.sln --no-build --configuration Release --verbosity normal

@@ -14,11 +14,13 @@
 *.userprefs
 *.dbmdl
 
-## Secrets & Local configs
+## Secrets & Local configs (NEVER COMMIT REAL SECRETS)
+.env
 *.env
 !.env.example
 *.local.json
-appsettings.Development.local.json
+appsettings.Development.json
+appsettings.*.local.json
 
 ## Docker
 hireflow-postgres-data/
