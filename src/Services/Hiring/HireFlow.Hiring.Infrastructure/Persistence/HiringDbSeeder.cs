@@ -13,6 +13,15 @@ public static class HiringDbSeeder
         var context = scope.ServiceProvider.GetRequiredService<HiringDbContext>();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<HiringDbContext>>();
 
+        if (context.Database.IsRelational())
+        {
+            await context.Database.MigrateAsync();
+        }
+        else
+        {
+            await context.Database.EnsureCreatedAsync();
+        }
+
         if (!await context.Companies.AnyAsync())
         {
             var defaultCompany = new Company

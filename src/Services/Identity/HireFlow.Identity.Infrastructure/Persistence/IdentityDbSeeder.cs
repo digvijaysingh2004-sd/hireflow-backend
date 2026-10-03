@@ -14,6 +14,15 @@ public static class IdentityDbSeeder
         var context = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<IdentityDbContext>>();
 
+        if (context.Database.IsRelational())
+        {
+            await context.Database.MigrateAsync();
+        }
+        else
+        {
+            await context.Database.EnsureCreatedAsync();
+        }
+
         // 1. Seed Roles
         var defaultRoles = new[]
         {
