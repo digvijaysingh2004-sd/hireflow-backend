@@ -35,6 +35,7 @@ public static class DependencyInjection
 
         services.AddSingleton<HireFlow.Identity.Application.Interfaces.IPasswordHasher, Security.PasswordHasher>();
         services.AddSingleton<HireFlow.Identity.Application.Interfaces.ITokenService, Security.TokenService>();
+        services.AddHttpClient<HireFlow.Identity.Application.Interfaces.INotificationClient, Services.NotificationClient>();
         services.AddScoped<HireFlow.Identity.Application.Interfaces.IAuthService, Services.AuthService>();
         services.AddScoped<HireFlow.Identity.Application.Interfaces.IUserService, Services.UserService>();
         services.AddScoped<HireFlow.Identity.Application.Interfaces.IRoleService, Services.RoleService>();

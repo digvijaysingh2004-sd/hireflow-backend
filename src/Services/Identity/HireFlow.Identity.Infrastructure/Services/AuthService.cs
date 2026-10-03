@@ -14,17 +14,20 @@ public class AuthService : IAuthService
     private readonly IdentityDbContext _dbContext;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
+    private readonly INotificationClient _notificationClient;
     private readonly ILogger<AuthService> _logger;
 
     public AuthService(
         IdentityDbContext dbContext,
         IPasswordHasher passwordHasher,
         ITokenService tokenService,
+        INotificationClient notificationClient,
         ILogger<AuthService> logger)
     {
         _dbContext = dbContext;
         _passwordHasher = passwordHasher;
         _tokenService = tokenService;
+        _notificationClient = notificationClient;
         _logger = logger;
     }
 
@@ -99,6 +102,15 @@ public class AuthService : IAuthService
         // Log OTP in development for convenience and easy testing
         _logger.LogInformation(">>> [REGISTRATION OTP] Email: {Email}, OTP Code: {OtpCode} (Expires in 10 minutes) <<<",
             normalizedEmail, otpCode);
+
+        try
+        {
+            await _notificationClient.SendOtpEmailAsync(normalizedEmail, "Registration", otpCode, otpChallenge.ExpiresAtUtc, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send registration OTP email to {Email}", normalizedEmail);
+        }
 
         return Result<Guid>.Success(user.Id, 201);
     }
@@ -218,6 +230,15 @@ public class AuthService : IAuthService
 
         _logger.LogInformation(">>> [RESENT OTP] Email: {Email}, Purpose: {Purpose}, OTP Code: {OtpCode} (Expires in 10 minutes) <<<",
             normalizedEmail, purpose, otpCode);
+
+        try
+        {
+            await _notificationClient.SendOtpEmailAsync(normalizedEmail, purpose, otpCode, challenge.ExpiresAtUtc, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send resend OTP email to {Email}", normalizedEmail);
+        }
 
         return Result<bool>.Success(true);
     }
@@ -499,6 +520,15 @@ public class AuthService : IAuthService
 
         _logger.LogInformation(">>> [PASSWORD RESET OTP] Email: {Email}, OTP Code: {OtpCode} (Expires in 10 minutes) <<<",
             normalizedEmail, otpCode);
+
+        try
+        {
+            await _notificationClient.SendOtpEmailAsync(normalizedEmail, "PasswordReset", otpCode, challenge.ExpiresAtUtc, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send password reset OTP email to {Email}", normalizedEmail);
+        }
 
         return Result<bool>.Success(true);
     }
