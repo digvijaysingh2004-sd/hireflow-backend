@@ -51,6 +51,11 @@ public class JobConfiguration : IEntityTypeConfiguration<Job>
         builder.Property(j => j.UpdatedAtUtc).HasColumnName("updated_at_utc").IsRequired();
         builder.Property(j => j.RowVersion).HasColumnName("row_version").IsConcurrencyToken().IsRequired();
 
+        builder.Ignore(j => j.Requirements);
+        builder.Ignore(j => j.Currency);
+        builder.Ignore(j => j.Skills);
+        builder.Ignore(j => j.ClosedAtUtc);
+
         builder.HasOne(j => j.Company)
             .WithMany(c => c.Jobs)
             .HasForeignKey(j => j.CompanyId)

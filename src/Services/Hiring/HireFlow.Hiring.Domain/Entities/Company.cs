@@ -10,6 +10,5 @@ public class Company
     public Guid CreatedByUserId { get; set; }
     public DateTimeOffset CreatedAtUtc { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAtUtc { get; set; } = DateTimeOffset.UtcNow;
-    public long RowVersion { get; set; } = 1;
     public ICollection<Job> Jobs { get; set; } = new List<Job>();
 }
