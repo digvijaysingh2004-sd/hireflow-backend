@@ -22,13 +22,28 @@ public class JobService : IJobService
 
     public async Task<Result<Guid>> CreateJobAsync(CreateJobRequest request, Guid currentUserId, CancellationToken cancellationToken = default)
     {
-        var company = await _dbContext.Companies
-            .FirstOrDefaultAsync(c => c.Id == request.CompanyId, cancellationToken);
+        var targetCompanyId = request.CompanyId;
+        var company = targetCompanyId != Guid.Empty
+            ? await _dbContext.Companies.FirstOrDefaultAsync(c => c.Id == targetCompanyId, cancellationToken)
+            : await _dbContext.Companies.FirstOrDefaultAsync(cancellationToken);
 
         if (company == null)
         {
-            return Result<Guid>.Failure("Target company not found.", 404);
+            company = new Company
+            {
+                Name = "HireFlow Technologies",
+                Slug = "hireflow-technologies",
+                Website = "https://hireflow.local",
+                Description = "Default organization",
+                CreatedByUserId = currentUserId,
+                CreatedAtUtc = DateTimeOffset.UtcNow,
+                UpdatedAtUtc = DateTimeOffset.UtcNow
+            };
+            _dbContext.Companies.Add(company);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
+
+        targetCompanyId = company.Id;
 
         var slug = GenerateSlug(request.Title);
         var baseSlug = slug;
@@ -40,7 +55,7 @@ public class JobService : IJobService
 
         var job = new Job
         {
-            CompanyId = request.CompanyId,
+            CompanyId = targetCompanyId,
             Title = request.Title.Trim(),
             Slug = slug,
             Description = request.Description.Trim(),

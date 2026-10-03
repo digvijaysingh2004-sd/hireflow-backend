@@ -127,6 +127,20 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Seed initial companies if empty
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        await HiringDbSeeder.SeedAsync(scope.ServiceProvider);
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogWarning(ex, "Could not seed hiring database on startup (database might not be updated or running yet).");
+    }
+}
+
 // Standard health endpoints
 app.MapGet("/health/live", () => Results.Ok(new { status = "Healthy", service = "Hiring", version = "1.0.0" }));
 app.MapGet("/health/ready", async (HiringDbContext db) =>

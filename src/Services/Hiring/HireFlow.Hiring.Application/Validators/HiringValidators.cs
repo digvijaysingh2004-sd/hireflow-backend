@@ -33,9 +33,6 @@ public class CreateJobRequestValidator : AbstractValidator<CreateJobRequest>
 {
     public CreateJobRequestValidator()
     {
-        RuleFor(x => x.CompanyId)
-            .NotEmpty().WithMessage("Company ID is required.");
-
         RuleFor(x => x.Title)
             .NotEmpty().WithMessage("Job title is required.")
             .MaximumLength(160).WithMessage("Job title cannot exceed 160 characters.");
