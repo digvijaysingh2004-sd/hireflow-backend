@@ -54,42 +54,59 @@ docker compose up -d postgres mailpit
 
 ---
 
-### 2. Run Individual Microservices
+### 2. Apply Database Migrations (All Services)
 
-#### Run Identity API (Port 5218)
+Run migrations for all microservices (`Identity`, `Hiring`, and `Notification`) from the repository root using any of the following one-liners:
+
+#### PowerShell (Windows):
+```powershell
+"Identity", "Hiring", "Notification" | ForEach-Object { dotnet ef database update --project "src/Services/$_/HireFlow.$_.Infrastructure" --startup-project "src/Services/$_/HireFlow.$_.Api" }
+```
+
+#### Bash / Git Bash (Linux / macOS):
+```bash
+for s in Identity Hiring Notification; do dotnet ef database update --project "src/Services/$s/HireFlow.$s.Infrastructure" --startup-project "src/Services/$s/HireFlow.$s.Api"; done
+```
+
+#### Direct Chained Command (CMD / PowerShell):
+```powershell
+dotnet ef database update --project src/Services/Identity/HireFlow.Identity.Infrastructure --startup-project src/Services/Identity/HireFlow.Identity.Api; dotnet ef database update --project src/Services/Hiring/HireFlow.Hiring.Infrastructure --startup-project src/Services/Hiring/HireFlow.Hiring.Api; dotnet ef database update --project src/Services/Notification/HireFlow.Notification.Infrastructure --startup-project src/Services/Notification/HireFlow.Notification.Api
+```
+
+---
+
+### 3. Run Microservices
+
+#### Run Individual Microservices
+
+**Identity API (Port 5218):**
 ```bash
 dotnet run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http
 ```
 
-#### Run Hiring API (Port 5104)
+**Hiring API (Port 5104):**
 ```bash
 dotnet run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http
 ```
 
-#### Run Notification API (Port 5289)
+**Notification API (Port 5289):**
 ```bash
 dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http
 ```
 
-### Run All Services at Once
+#### Run All Services at Once
+
+**Bash / Git Bash:**
 ```bash
 dotnet run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http & dotnet run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http & dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http &
 ```
 
----
-
-### 3. Run All Microservices at Once
-
-#### PowerShell One-Liner:
+**PowerShell (Separate Windows):**
 ```powershell
 Start-Process dotnet -ArgumentList "run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http" ; Start-Process dotnet -ArgumentList "run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http"
 ```
 
----
-
-### 4. Run All Microservices at Once
-
-#### CMD One-Liner:
+**CMD (Separate Windows):**
 ```cmd
 start "" dotnet run --project src/Services/Identity/HireFlow.Identity.Api --launch-profile http & start "" dotnet run --project src/Services/Hiring/HireFlow.Hiring.Api --launch-profile http & start "" dotnet run --project src/Services/Notification/HireFlow.Notification.Api --launch-profile http
 ```
