@@ -37,7 +37,10 @@ public record UserDto(
     string Email,
     string FirstName,
     string LastName,
-    IReadOnlyList<string> Roles
+    IReadOnlyList<string> Roles,
+    bool IsActive = true,
+    bool IsEmailVerified = false,
+    DateTimeOffset? CreatedAtUtc = null
 );
 
 public record AuthResponse(

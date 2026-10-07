@@ -329,7 +329,7 @@ public class AuthService : IAuthService
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        var userDto = new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles);
+        var userDto = new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles, user.IsActive, user.IsEmailVerified, user.CreatedAtUtc);
         var response = new AuthResponse(
             accessToken,
             _tokenService.AccessTokenExpiryMinutes * 60,
@@ -431,7 +431,7 @@ public class AuthService : IAuthService
         var roles = user.UserRoles.Select(ur => ur.Role.Name).ToList();
         var newAccessToken = _tokenService.GenerateAccessToken(user, roles);
 
-        var userDto = new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles);
+        var userDto = new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles, user.IsActive, user.IsEmailVerified, user.CreatedAtUtc);
         var response = new AuthResponse(
             newAccessToken,
             _tokenService.AccessTokenExpiryMinutes * 60,
@@ -615,7 +615,7 @@ public class AuthService : IAuthService
         }
 
         var roles = user.UserRoles.Select(ur => ur.Role.Name).ToList();
-        var dto = new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles);
+        var dto = new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles, user.IsActive, user.IsEmailVerified, user.CreatedAtUtc);
         return Result<UserDto>.Success(dto);
     }
 

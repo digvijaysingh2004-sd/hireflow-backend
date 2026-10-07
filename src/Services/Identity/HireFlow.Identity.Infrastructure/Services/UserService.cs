@@ -127,7 +127,7 @@ public class UserService : IUserService
         }
 
         var roles = user.UserRoles.Select(ur => ur.Role.Name).ToList();
-        return Result<UserDto>.Success(new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles));
+        return Result<UserDto>.Success(new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles, user.IsActive, user.IsEmailVerified, user.CreatedAtUtc));
     }
 
     public async Task<Result<UserDto>> UpdateProfileAsync(
@@ -161,7 +161,7 @@ public class UserService : IUserService
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         var roles = user.UserRoles.Select(ur => ur.Role.Name).ToList();
-        return Result<UserDto>.Success(new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles));
+        return Result<UserDto>.Success(new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles, user.IsActive, user.IsEmailVerified, user.CreatedAtUtc));
     }
 
     public async Task<Result<bool>> ChangePasswordAsync(
@@ -258,7 +258,10 @@ public class UserService : IUserService
             u.Email,
             u.FirstName,
             u.LastName,
-            u.UserRoles.Select(ur => ur.Role.Name).ToList()
+            u.UserRoles.Select(ur => ur.Role.Name).ToList(),
+            u.IsActive,
+            u.IsEmailVerified,
+            u.CreatedAtUtc
         )).ToList();
 
         var paged = PagedResult<UserDto>.Create(dtos, page, pageSize, totalCount);
@@ -279,7 +282,7 @@ public class UserService : IUserService
         }
 
         var roles = user.UserRoles.Select(ur => ur.Role.Name).ToList();
-        return Result<UserDto>.Success(new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles));
+        return Result<UserDto>.Success(new UserDto(user.Id, user.Email, user.FirstName, user.LastName, roles, user.IsActive, user.IsEmailVerified, user.CreatedAtUtc));
     }
 
     public async Task<Result<bool>> UpdateUserStatusAsync(Guid userId, bool isActive, CancellationToken cancellationToken = default)
@@ -359,6 +362,34 @@ public class UserService : IUserService
             EntityType = "User",
             EntityId = userId.ToString(),
             NewValuesJson = $"{{\"roles\": [\"{string.Join("\", \"", requestedRoles.Select(r => r.Name))}\"]}}",
+            CreatedAtUtc = DateTimeOffset.UtcNow
+        });
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return Result<bool>.Success(true);
+    }
+
+    public async Task<Result<bool>> DeleteUserAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        var user = await _dbContext.Users
+            .Include(u => u.UserRoles)
+            .Include(u => u.RefreshTokens)
+            .Include(u => u.OtpChallenges)
+            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+
+        if (user == null)
+        {
+            return Result<bool>.Failure("User not found.", 404);
+        }
+
+        _dbContext.Users.Remove(user);
+
+        _dbContext.AuditLogs.Add(new AuditLog
+        {
+            ActorUserId = userId,
+            Action = "UserDeleted",
+            EntityType = "User",
+            EntityId = userId.ToString(),
             CreatedAtUtc = DateTimeOffset.UtcNow
         });
 

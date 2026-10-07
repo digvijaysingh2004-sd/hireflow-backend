@@ -117,4 +117,27 @@ public class UsersControllerTests
         var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
         okResult.StatusCode.Should().Be(200);
     }
+
+    [Fact]
+    public async Task DeleteUser_ExistingUser_Returns200()
+    {
+        var targetUserId = Guid.NewGuid();
+
+        _userServiceMock.Setup(s => s.DeleteUserAsync(targetUserId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result<bool>.Success(true));
+
+        var result = await _controller.DeleteUser(targetUserId, CancellationToken.None);
+
+        var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+        okResult.StatusCode.Should().Be(200);
+    }
+
+    [Fact]
+    public async Task DeleteUser_SelfDelete_Returns400BadRequest()
+    {
+        var result = await _controller.DeleteUser(_testUserId, CancellationToken.None);
+
+        var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
+        badRequestResult.StatusCode.Should().Be(400);
+    }
 }

@@ -214,6 +214,30 @@ public class UsersController : ControllerBase
         return Ok(new { message = "User roles updated successfully." });
     }
 
+    /// <summary>
+    /// Delete user account (Admin only).
+    /// </summary>
+    [HttpDelete("{userId:guid}")]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteUser(Guid userId, CancellationToken cancellationToken)
+    {
+        var currentUserId = GetCurrentUserId();
+        if (currentUserId == userId)
+        {
+            return BadRequest(new { message = "You cannot delete your own account." });
+        }
+
+        var result = await _userService.DeleteUserAsync(userId, cancellationToken);
+        if (!result.IsSuccess)
+        {
+            return StatusCode(result.StatusCode, new { message = result.Error });
+        }
+        return Ok(new { message = "User deleted successfully." });
+    }
+
     private Guid GetCurrentUserId()
     {
         var sub = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");

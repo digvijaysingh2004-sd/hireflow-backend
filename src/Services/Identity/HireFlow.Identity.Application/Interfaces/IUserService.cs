@@ -15,6 +15,7 @@ public interface IUserService
     Task<Result<UserDto>> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<Result<bool>> UpdateUserStatusAsync(Guid userId, bool isActive, CancellationToken cancellationToken = default);
     Task<Result<bool>> UpdateUserRolesAsync(Guid userId, IReadOnlyList<string> roleNames, CancellationToken cancellationToken = default);
+    Task<Result<bool>> DeleteUserAsync(Guid userId, CancellationToken cancellationToken = default);
 }
 
 public interface IRoleService
