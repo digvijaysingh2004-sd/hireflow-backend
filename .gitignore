@@ -21,6 +21,8 @@
 *.local.json
 appsettings.Development.json
 appsettings.*.local.json
+passwords.md
+*.secret
 
 ## Docker
 hireflow-postgres-data/
