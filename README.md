@@ -147,10 +147,16 @@ start "" dotnet run --project src/Services/Identity/HireFlow.Identity.Api --laun
 
 ---
 
-## 🌐 Swagger UI Documentation Links
+## 🌐 Live Deployments & Swagger Documentation
 
-When running locally, Swagger UI is available at:
+### Live Cloud Deployments
+- **Frontend (Vercel)**: [https://hireflow-ten-kohl.vercel.app](https://hireflow-ten-kohl.vercel.app/)
+- **Identity Service (Render)**: [https://hireflow-identity.onrender.com](https://hireflow-identity.onrender.com)
+- **Hiring Service (Render)**: [https://hireflow-hiring.onrender.com](https://hireflow-hiring.onrender.com)
+- **Notification Service (Render)**: [https://hireflow-notification.onrender.com](https://hireflow-notification.onrender.com)
 
+### Local Swagger UI Links
+When running locally:
 - **Identity Service Swagger**: `http://localhost:5218/swagger`
 - **Hiring Service Swagger**: `http://localhost:5104/swagger`
 - **Notification Service Swagger**: `http://localhost:5289/swagger`
