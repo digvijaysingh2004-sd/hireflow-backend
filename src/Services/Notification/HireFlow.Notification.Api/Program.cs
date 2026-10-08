@@ -28,21 +28,28 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("HireFlowCorsPolicy", policy =>
     {
-        if (builder.Environment.IsDevelopment())
+        policy.SetIsOriginAllowed(origin =>
         {
-            policy.SetIsOriginAllowed(_ => true)
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        }
-        else
-        {
-            var allowedOrigins = new List<string> { frontendOrigin.TrimEnd('/') };
-            policy.WithOrigins(allowedOrigins.ToArray())
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        }
+            if (string.IsNullOrWhiteSpace(origin)) return false;
+            if (builder.Environment.IsDevelopment()) return true;
+
+            try
+            {
+                var uri = new Uri(origin);
+                return uri.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
+                    || uri.Host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase)
+                    || uri.Host.EndsWith(".vercel.app", StringComparison.OrdinalIgnoreCase)
+                    || uri.Host.EndsWith(".onrender.com", StringComparison.OrdinalIgnoreCase)
+                    || (Uri.TryCreate(frontendOrigin, UriKind.Absolute, out var frontendUri) && uri.Host.Equals(frontendUri.Host, StringComparison.OrdinalIgnoreCase));
+            }
+            catch
+            {
+                return false;
+            }
+        })
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
     });
 });
 

@@ -43,7 +43,7 @@ public class AuthController : ControllerBase
     /// Register a new user account.
     /// </summary>
     [HttpPost("register")]
-    [RateLimit(Policy = "identity-register", MaxRequests = 5, WindowSeconds = 900)]
+    [RateLimit(Policy = "identity-register", MaxRequests = 30, WindowSeconds = 300)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -73,7 +73,7 @@ public class AuthController : ControllerBase
     /// Verify an email address using the 6-digit OTP code.
     /// </summary>
     [HttpPost("verify-email")]
-    [RateLimit(Policy = "identity-otp", MaxRequests = 5, WindowSeconds = 600)]
+    [RateLimit(Policy = "identity-otp", MaxRequests = 30, WindowSeconds = 300)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
@@ -98,7 +98,7 @@ public class AuthController : ControllerBase
     /// Resend verification or security OTP code.
     /// </summary>
     [HttpPost("resend-otp")]
-    [RateLimit(Policy = "identity-resend-otp", MaxRequests = 3, WindowSeconds = 900)]
+    [RateLimit(Policy = "identity-resend-otp", MaxRequests = 15, WindowSeconds = 300)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
@@ -121,7 +121,7 @@ public class AuthController : ControllerBase
     /// Log in with email and password to receive JWT access and refresh tokens.
     /// </summary>
     [HttpPost("login")]
-    [RateLimit(Policy = "identity-login", MaxRequests = 5, WindowSeconds = 900)]
+    [RateLimit(Policy = "identity-login", MaxRequests = 30, WindowSeconds = 300)]
     [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
